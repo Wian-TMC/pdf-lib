@@ -537,8 +537,12 @@ export default class PDFForm {
 
     for (let idx = 0, len = fields.length; idx < len; idx++) {
       const field = fields[idx];
-      if (field.needsAppearancesUpdate()) {
-        field.defaultUpdateAppearances(font);
+      try {
+        if (field.needsAppearancesUpdate()) {
+          field.defaultUpdateAppearances(font);
+        }
+      } catch (error) {
+        console.log(error)
       }
     }
   }
