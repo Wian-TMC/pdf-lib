@@ -30,7 +30,7 @@
     "release:prep": "yarn clean && yarn lint && yarn typecheck && yarn test && yarn build",
     "release:tag": "TAG=\"v$(yarn --silent get:version)\" && git tag $TAG && git push origin $TAG",
     "get:version": "node --eval 'console.log(require(`./package.json`).version)'",
-    "clean": "rimraf ts3.4 build cjs dist es scratchpad/build coverage tsBuildInfo.json apps/node-build apps/node/tsBuildInfo.json isolate*.log flamegraph.html out.pdf",
+    "clean": "rimraf ts3.4 build dist es scratchpad/build coverage tsBuildInfo.json apps/node-build apps/node/tsBuildInfo.json isolate*.log flamegraph.html out.pdf",
     "typecheck": "tsc --noEmit --incremental false --tsBuildInfoFile null",
     "test": "jest --config jest.json --runInBand",
     "testw": "jest --config jest.json --watch",
@@ -40,7 +40,7 @@
     "lint:tslint:tests": "tslint --project tests/tsconfig.json --fix",
     "lint:prettier": "prettier --write \"./{src,tests,apps}/**/*.{ts,js,json,html,css}\" --loglevel error",
     "build": "yarn build:cjs && yarn build:es && yarn build:esm && yarn build:esm:min && yarn build:umd && yarn build:umd:min && yarn build:downlevel-dts",
-    "build:cjs": "ttsc --module commonjs --outDir cjs",
+    "build:cjs": "ttsc --module commonjs --outDir ./",
     "build:es": "ttsc --module ES2015 --outDir es",
     "build:esm": "rollup --config rollup.config.js --file dist/pdf-lib.esm.js --environment MODULE_TYPE:es",
     "build:esm:min": "rollup --config rollup.config.js --file dist/pdf-lib.esm.min.js --environment MINIFY,MODULE_TYPE:es",
@@ -61,7 +61,7 @@
   "main": "index.js",
   "module": "es/index.js",
   "unpkg": "dist/pdf-lib.min.js",
-  "types": "cjs/index.d.ts",
+  "types": "index.d.ts",
   "typesVersions": {
     "<=3.5": {
       "*": [
@@ -70,7 +70,6 @@
     }
   },
   "files": [
-    "cjs/",
     "dist/",
     "es/",
     "src/",
